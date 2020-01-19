@@ -1,5 +1,6 @@
 package distributor;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,11 +9,13 @@ public class Money {
     private Map<Coin, Integer> map = new HashMap<>();
 
     public double sum() {
-        double sum = 0;
+        BigDecimal sum = BigDecimal.ZERO;
         for (Coin coin : map.keySet()) {
-            sum += (coin.getValue() * map.get(coin));
+            BigDecimal coinValues = BigDecimal.valueOf(coin.getValue())
+                    .multiply(BigDecimal.valueOf(map.get(coin)));
+            sum = sum.add(coinValues);
         }
-        return sum;
+        return sum.doubleValue();
     }
 
     public void add(Money toAdd) {

@@ -1,6 +1,6 @@
 package distributor;
 
-import distributor.core.Distributor;
+import distributor.core.toto.Distributor;
 import distributor.core.DistributorSelectResult;
 import distributor.core.DistributorSelectResultError;
 import distributor.product.Drink;
@@ -38,14 +38,14 @@ public class Runner {
 
         Distributor distributor = new Distributor(magasin, mapBoissonPrix, checkout);
 
-        System.out.println("Début Scénario 1: Pas assez d'argent");
+        /*System.out.println("Début Scénario 1: Pas assez d'argent");
         Money money1 = new Money();
         money1.add(Coin.FIFTY_CENTS, 2);
         money1.add(Coin.ONE_EURO, 1);
 
         DistributorSelectResult result1 = distributor.select(DrinkType.COCA, money1);
         displayResult(result1);
-        System.out.println("Fin Scénario 1: Pas assez d'argent");
+        System.out.println("Fin Scénario 1: Pas assez d'argent");*/
 
         System.out.println("Début Scénario 2: Happy path");
         Money money2 = new Money();
@@ -58,7 +58,7 @@ public class Runner {
         System.out.println("Fin Scénario 2: Happy path");
 
 
-        System.out.println("Début Scénario 3: Plus de boisson");
+        /*System.out.println("Début Scénario 3: Plus de boisson");
         Money money3 = new Money();
         money3.add(Coin.FIFTY_CENTS, 2);
         money3.add(Coin.TWENTY_CENTS, 2);
@@ -66,7 +66,7 @@ public class Runner {
 
         DistributorSelectResult result3 = distributor.select(DrinkType.COCA, money3);
         displayResult(result3);
-        System.out.println("Fin Scénario 3: Plus de boisson");
+        System.out.println("Fin Scénario 3: Plus de boisson");*/
 
     }
 
@@ -80,6 +80,9 @@ public class Runner {
                         break;
                     case NO_ENOUGH_MONEY:
                         System.out.println("Il n'y a pas assez d'argent pour cette boisson.");
+                        break;
+                    case ERROR_WITH_STORE:
+                        System.out.println("Il y a pb avec le magasin.");
                         break;
                 }
             }

@@ -1,7 +1,8 @@
-package distributor.core;
+package distributor.core.toto;
 
 
 import distributor.Money;
+import distributor.core.*;
 import distributor.product.Drink;
 import distributor.product.DrinkType;
 
@@ -24,17 +25,25 @@ public class Distributor {
         DistributorSelectResult result = new DistributorSelectResult();
         double price = drinkTypePrice.get(drinkType);
         boolean isEnough = money.sum() >= price;
-        if (store.findAndLoad(drinkType) && isEnough) {
-            result.setDrink(store.pullLoaded());
-            result.setMoneyBack(checkout.pay(money, price));
-        } else {
-            if (!store.isLoaded()) {
-                result.getErrors().add(DistributorSelectResultError.NO_DRINK_FOR_TYPE);
+
+        try {
+            if (/*store.findAndLoad(drinkType) &&*/ isEnough) {
+                result.setDrink(store.pullLoaded());
+                result.setMoneyBack(checkout.pay(money, price));
+            } else {
+                if (!store.isLoaded()) {
+                    result.getErrors().add(DistributorSelectResultError.NO_DRINK_FOR_TYPE);
+                }
+                if (!isEnough) {
+                    result.getErrors().add(DistributorSelectResultError.NO_ENOUGH_MONEY);
+                }
             }
-            if (!isEnough) {
-                result.getErrors().add(DistributorSelectResultError.NO_ENOUGH_MONEY);
-            }
+        } catch (DistributorStoreException e) {
+            e.printStackTrace();
+            result.getErrors().add(DistributorSelectResultError.ERROR_WITH_STORE);
         }
+
+
         return result;
     }
 

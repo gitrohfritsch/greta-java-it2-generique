@@ -27,7 +27,12 @@ public class DistributorStore {
         return false;
     }
 
-    public Drink pullLoaded() {
+    public Drink pullLoaded() throws DistributorStoreException {
+        if(loaded == null) {
+            throw new DistributorStoreException("La boisson n'est pas chargée");
+        }
+
+
         Drink loadedTempo = loaded;
         list.remove(loaded);
         loaded = null;
